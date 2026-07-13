@@ -1,0 +1,165 @@
+/* ═══════════════════════════════════════════════════════════════════════
+ * SYSTÈME DE DESIGN — République du Mali
+ * Application de Gestion du Courrier · Palette Souveraine
+ * ═══════════════════════════════════════════════════════════════════════
+ * Inter + Source Sans 3 importées dans main.tsx via @fontsource.
+ * ═══════════════════════════════════════════════════════════════════════ */
+
+@import "tailwindcss";
+
+/* Classe `.dark` sur <html> — mode sombre post-connexion. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── DESIGN TOKENS ──────────────────────────────────────────────────── */
+@theme {
+  /* ── Palette souveraine (5 familles) ── */
+  --color-gov-green-deep:  #0B2E24;
+  --color-gov-green:       #127A52;
+  --color-gov-green-hover: #0E6644;
+  --color-gov-gold:        #C9A227;
+  --color-gov-gold-light:  #E0B84C;
+  --color-gov-surface:     #FAFBF9;
+  --color-gov-dark:        #1A231F;
+  --color-gov-gray-dark:   #5B6B63;
+  --color-gov-error:       #B23A2E;
+
+  /* ── Neutres & sémantiques ── */
+  --color-gov-gray-medium: #D5D8D2;
+  --color-gov-gray:        #F2F5F0;
+  --color-gov-ivory:       #F7F9F6;
+  --color-gov-success:     #127A52;
+  --color-gov-warning:     #B7791F;
+
+  /* ── Rétro-compatibilité (Home.tsx etc.) ── */
+  --color-gov-navy:        #0B2E24;
+
+  /* ── Typo (max 2 familles) ── */
+  --font-sans:    'Public Sans', system-ui, sans-serif;
+  --font-heading: 'Newsreader', Georgia, 'Times New Roman', serif;
+
+  /* ── Géométrie ── */
+  --radius-card:  16px;
+  --radius-btn:   12px;
+  --radius-input: 12px;
+
+  /* ── Ombre carte (multi-couches) ── */
+  --shadow-card:
+    0 1px  3px rgba(11,46,36, 0.03),
+    0 6px 16px rgba(11,46,36, 0.05),
+    0 20px 48px rgba(11,46,36, 0.07);
+  --shadow-card-lg:
+    0 2px  4px rgba(11,46,36, 0.04),
+    0 8px 24px rgba(11,46,36, 0.08),
+    0 32px 64px rgba(11,46,36, 0.10);
+
+  /* ── Animations ── */
+  --animate-fade-in:  fade-in  0.35s ease-out both;
+  --animate-slide-up: slide-up 0.35s ease-out both;
+  --animate-rise:     rise     0.4s  ease-out both;
+  --animate-shake:    shake    0.4s  cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* ─── KEYFRAMES ──────────────────────────────────────────────────────── */
+@keyframes fade-in {
+  from { opacity: 0 }
+  to   { opacity: 1 }
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(10px) }
+  to   { opacity: 1; transform: translateY(0) }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px) scale(.995) }
+  to   { opacity: 1; transform: translateY(0)   scale(1) }
+}
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0) }
+  20%, 80% { transform: translate3d( 2px, 0, 0) }
+  30%, 50%, 70% { transform: translate3d(-3px, 0, 0) }
+  40%, 60% { transform: translate3d( 3px, 0, 0) }
+}
+
+/* ─── UTILITAIRES TEXTURES ───────────────────────────────────────────── */
+@layer utilities {
+  .bg-grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+}
+
+/* ─── BASE ───────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--color-gov-gray);
+    color: var(--color-gov-dark);
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── Animations désactivées si demandé par l'OS ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ── Focus global — liseré or ── */
+  :focus-visible {
+    outline: 2px solid var(--color-gov-gold);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  /* ── Sélection ── */
+  ::selection { background: rgba(18,122,82, 0.15) }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px }
+  ::-webkit-scrollbar-track { background: transparent }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-gov-gray-medium);
+    border-radius: 9999px;
+  }
+
+  /* ── Mode sombre (post-connexion) ── */
+  .dark {
+    --color-gov-green-deep:  #071A12;
+    --color-gov-green:       #16834A;
+    --color-gov-green-hover: #0E6644;
+    --color-gov-gold:        #E0B84C;
+    --color-gov-gold-light:  #F0D078;
+    --color-gov-dark:        #E4EDE6;
+    --color-gov-gray-dark:   #8FA896;
+    --color-gov-gray-medium: #1E3028;
+    --color-gov-gray:        #0A1610;
+    --color-gov-surface:     #101E16;
+    --color-gov-ivory:       #121F18;
+    --color-gov-navy:        #071A12;
+    /* Sémantiques éclaircies pour rester lisibles sur fond sombre. */
+    --color-gov-error:       #F0897E;
+    --color-gov-warning:     #E0A94A;
+    --color-gov-success:     #3FB57C;
+    --shadow-card:
+      0 1px  2px rgba(0,0,0,.40),
+      0 4px 12px rgba(0,0,0,.30),
+      0 16px 48px rgba(0,0,0,.25);
+  }
+  .dark body { background: var(--color-gov-gray); color: var(--color-gov-dark) }
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: var(--color-gov-dark);
+  }
+  .dark ::selection { background: rgba(201,162,39, 0.25) }
+}
