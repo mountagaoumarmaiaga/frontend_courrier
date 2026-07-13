@@ -39,3 +39,6 @@ coverage
 # Gemeni/AI IDE generated directories
 .agents/
 .gemini/
+.claude/
+.impeccable/
+.codex/
