@@ -33,19 +33,21 @@ export function Navbar() {
       <div className="flex items-center gap-1">
         {/* Notifications (placeholder) */}
         <button
-          className="relative flex h-9 w-9 items-center justify-center rounded-lg text-gov-gray-dark transition-colors hover:bg-gov-gray hover:text-gov-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gov-gold"
+          className="relative flex h-9 w-9 items-center justify-center rounded-lg text-gov-gray-dark transition-[color,background-color,transform] duration-150 hover:bg-gov-gray hover:text-gov-dark hover:-translate-y-[1px] active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gov-gold"
           aria-label="Notifications"
         >
           <Bell size={18} />
         </button>
 
-        {/* Thème */}
+        {/* Thème — l'icône pivote en 3D à chaque bascule (clé = thème). */}
         <button
           onClick={toggleTheme}
           aria-label="Changer le thème"
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-gov-gray-dark transition-colors hover:bg-gov-gray hover:text-gov-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gov-gold"
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-gov-gray-dark transition-[color,background-color,transform] duration-150 hover:bg-gov-gray hover:text-gov-dark hover:-translate-y-[1px] active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gov-gold"
         >
-          {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          <span key={theme} className="inline-flex animate-icon-swap">
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          </span>
         </button>
 
         {/* Séparateur */}
@@ -54,7 +56,7 @@ export function Navbar() {
         {/* Profil utilisateur */}
         {user && (
           <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#C9A227]/15 text-[12px] font-bold text-[#C9A227]">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gov-gold/15 text-[12px] font-bold text-gov-dark ring-1 ring-inset ring-gov-gold/30 transition-transform duration-200 ease-out hover:[transform:perspective(400px)_rotateX(10deg)_scale(1.05)]">
               {user.firstName[0]}{user.lastName[0]}
             </div>
             <div className="hidden sm:block">
@@ -73,7 +75,7 @@ export function Navbar() {
           onClick={handleLogout}
           aria-label="Déconnexion"
           title="Déconnexion"
-          className="ml-1 flex h-9 w-9 items-center justify-center rounded-lg text-gov-gray-dark transition-colors hover:bg-red-50 hover:text-red-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gov-gold"
+          className="ml-1 flex h-9 w-9 items-center justify-center rounded-lg text-gov-gray-dark transition-[color,background-color,transform] duration-150 hover:bg-gov-error/10 hover:text-gov-error hover:-translate-y-[1px] active:translate-y-0 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gov-gold"
         >
           <LogOut size={17} />
         </button>
