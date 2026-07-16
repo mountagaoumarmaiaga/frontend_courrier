@@ -57,6 +57,8 @@
   --animate-slide-up: slide-up 0.35s ease-out both;
   --animate-rise:     rise     0.4s  ease-out both;
   --animate-shake:    shake    0.4s  cubic-bezier(.36,.07,.19,.97) both;
+  --animate-nav-in:    nav-in    0.3s  ease-out both;
+  --animate-icon-swap: icon-swap 0.25s ease-out both;
 }
 
 /* ─── KEYFRAMES ──────────────────────────────────────────────────────── */
@@ -77,6 +79,20 @@
   20%, 80% { transform: translate3d( 2px, 0, 0) }
   30%, 50%, 70% { transform: translate3d(-3px, 0, 0) }
   40%, 60% { transform: translate3d( 3px, 0, 0) }
+}
+/* Entrée des éléments de navigation (coque) — décalage géré par
+   `animation-delay` en ligne pour un léger effet de cascade.
+   Transform uniquement : si l'animation ne joue pas (onglet caché,
+   rendu figé), le contenu reste visible — jamais d'opacité 0 gelée. */
+@keyframes nav-in {
+  from { transform: translateX(-12px) }
+  to   { transform: translateX(0) }
+}
+/* Bascule d'icône (ex. soleil ↔ lune) : petite rotation 3D qui signale
+   le changement d'état sans distraire. Transform uniquement, même raison. */
+@keyframes icon-swap {
+  from { transform: perspective(400px) rotateY(-70deg) scale(0.85) }
+  to   { transform: perspective(400px) rotateY(0deg) scale(1) }
 }
 
 /* ─── UTILITAIRES TEXTURES ───────────────────────────────────────────── */

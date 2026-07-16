@@ -3,39 +3,23 @@ import { BRANDING } from '@/lib/branding';
 interface EmblemProps {
   className?: string;
   /**
-   * Forcer une variante (utile sur un fond fixe, ex. le volet marine qui est
-   * toujours sombre). Sans `fixed`, l'emblème suit le thème clair/sombre.
+   * Conservé pour compatibilité d'API. L'emblème officiel (sceau de la
+   * République) possède son propre fond et reste lisible sur tout fond ;
+   * la variante clair/sombre n'est donc plus nécessaire.
    */
   fixed?: 'light' | 'dark';
 }
 
 /**
- * Emblème de la République, affiché à partir d'une image.
- * Les fichiers se trouvent dans `public/` (voir `BRANDING.emblem`) : il suffit
- * de remplacer `emblem-light.svg` / `emblem-dark.svg` par les images réelles.
+ * Emblème officiel de la République du Mali (sceau), affiché en cercle net.
+ * Source unique : `BRANDING.logo` (public/). Utilisé sur l'écran de connexion.
  */
-export function Emblem({ className, fixed }: EmblemProps) {
-  const base = `object-contain ${className ?? ''}`.trim();
-
-  if (fixed) {
-    return (
-      <img src={BRANDING.emblem[fixed]} alt="Emblème de la République du Mali" className={base} />
-    );
-  }
-
+export function Emblem({ className }: EmblemProps) {
   return (
-    <>
-      <img
-        src={BRANDING.emblem.light}
-        alt="Emblème de la République du Mali"
-        className={`${base} block dark:hidden`}
-      />
-      <img
-        src={BRANDING.emblem.dark}
-        alt=""
-        aria-hidden="true"
-        className={`${base} hidden dark:block`}
-      />
-    </>
+    <img
+      src={BRANDING.logo}
+      alt="Emblème de la République du Mali"
+      className={`rounded-full object-cover ring-1 ring-inset ring-black/10 ${className ?? ''}`.trim()}
+    />
   );
 }

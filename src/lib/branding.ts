@@ -10,8 +10,11 @@ export const BRANDING = {
   system: 'Système de Gestion des Courriers Ministériels',
   shortName: 'Gestion des Courriers',
   adminEmail: 'support@courrier.gouv.ml',
-  /** Emblèmes affichés selon le thème. Remplacez les fichiers dans public/
-      (ou changez ces chemins si vos images ont une autre extension/nom). */
+  /** Emblème officiel (sceau de la République) — fond bleu, lisible sur
+      clair comme sur sombre. Fichier dans public/. */
+  logo: '/Embleme.jpg',
+  /** Emblèmes vectoriels affichés selon le thème (écran de connexion, etc.).
+      Remplacez les fichiers dans public/ par les visuels réels. */
   emblem: {
     light: '/emblem-light.svg', // sur fond clair
     dark: '/emblem-dark.svg', // sur fond sombre
