@@ -1,3 +1,5 @@
+import type { CourierListParams } from '@/lib/types';
+
 /**
  * Fabrique centralisée des clés de requête TanStack Query.
  *
@@ -13,6 +15,22 @@ export const queryKeys = {
   auth: {
     all: ['auth'] as const,
     me: () => [...queryKeys.auth.all, 'me'] as const,
+  },
+  couriers: {
+    all: ['couriers'] as const,
+    /**
+     * `params` fait partie de la clé : la liste filtrée côté serveur et la
+     * liste complète (recherche + pagination client) sont deux caches
+     * distincts.
+     */
+    list: (params: CourierListParams = {}) =>
+      [...queryKeys.couriers.all, 'list', params] as const,
+    detail: (id: string) => [...queryKeys.couriers.all, 'detail', id] as const,
+    history: (id: string) => [...queryKeys.couriers.all, 'history', id] as const,
+  },
+  users: {
+    all: ['users'] as const,
+    list: () => [...queryKeys.users.all, 'list'] as const,
   },
   services: {
     all: ['services'] as const,

@@ -30,6 +30,17 @@
   --color-gov-success:     #127A52;
   --color-gov-warning:     #B7791F;
 
+  /* ── Bleu applicatif ──
+   * Hors palette souveraine : `DESIGN.md` ne définit aucun bleu (vert + or).
+   * `PRODUCT.md` évoque en revanche un « bleu institutionnel ». Ajouté à la
+   * demande, pour deux usages précis et bornés : le statut « En cours »
+   * (les quatre statuts ont besoin de quatre teintes distinctes, et vert /
+   * rouge / orange sont déjà pris) et l'icône dossier de la grille.
+   * Ne pas étendre au-delà : l'accent de l'application reste vert + or. */
+  --color-gov-info:        #2C6BB3;
+  --color-gov-folder:      #7FB2EF;
+  --color-gov-folder-tab:  #A5C9F5;
+
   /* ── Rétro-compatibilité (Home.tsx etc.) ── */
   --color-gov-navy:        #0B2E24;
 
@@ -41,6 +52,7 @@
   --radius-card:  16px;
   --radius-btn:   12px;
   --radius-input: 12px;
+  --radius-pill:  9999px;
 
   /* ── Ombre carte (multi-couches) ── */
   --shadow-card:
@@ -168,6 +180,11 @@
     --color-gov-error:       #F0897E;
     --color-gov-warning:     #E0A94A;
     --color-gov-success:     #3FB57C;
+    --color-gov-info:        #8CBEF5;
+    /* Le dossier s'assombrit au lieu de s'éclaircir : un bleu clair plein sur
+       fond nuit ferait lampe torche sur une grille de 50 vignettes. */
+    --color-gov-folder:      #4A7CBF;
+    --color-gov-folder-tab:  #5D91D4;
     --shadow-card:
       0 1px  2px rgba(0,0,0,.40),
       0 4px 12px rgba(0,0,0,.30),

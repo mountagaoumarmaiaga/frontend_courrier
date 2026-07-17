@@ -5,6 +5,8 @@ import { RequireAuth } from '@/components/auth/RequireAuth';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { Login } from '@/pages/auth/Login';
 import { Home } from '@/pages/Home';
+import { CourierListPage } from '@/pages/courier/CourierListPage';
+import { CourierDetailPage } from '@/pages/courier/CourierDetailPage';
 import { SettingsPage } from '@/pages/settings/SettingsPage';
 
 /** Empêche d'afficher /login à un utilisateur déjà connecté. */
@@ -29,6 +31,8 @@ export function AppRoutes() {
         }
       >
         <Route path="/" element={<Home />} />
+        <Route path="/courriers" element={<CourierListPage />} />
+        <Route path="/courriers/:id" element={<CourierDetailPage />} />
         <Route path="/settings" element={<SettingsPage />} />
       </Route>
 

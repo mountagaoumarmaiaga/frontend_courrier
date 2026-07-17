@@ -1,6 +1,9 @@
 import { api } from './client';
 import type {
   ApiEnvelope,
+  Courier,
+  CourierHistory,
+  CourierListParams,
   LoginCredentials,
   LoginData,
   SenderType,
@@ -37,6 +40,33 @@ export const authApi = {
 export const userApi = {
   /** GET /users — liste tous les utilisateurs */
   index: () => api.get<ApiEnvelope<User[]>>('/users'),
+};
+
+/**
+ * Module « Courrier » (`/couriers`). Bearer requis.
+ *
+ * Le dossier technique décrit `courier.index` avec une réponse en tableau nu,
+ * alors que le reste de l'API archimind enveloppe tout dans
+ * `{ success, data, message }`. Le type de retour couvre donc les deux formes
+ * et `unwrapList` / `unwrapItem` (hooks) normalisent à la lecture — le jour où
+ * le backend tranche, rien ne casse ici.
+ */
+export const courierApi = {
+  /** GET /couriers — liste filtrable (`id_status`, `id_currentService`, `search`). */
+  index: (params?: CourierListParams) =>
+    api.get<ApiEnvelope<Courier[]> | Courier[]>('/couriers', { params }),
+
+  /** GET /couriers/{id} — détail d'un dossier. */
+  show: (id: string) => api.get<ApiEnvelope<Courier> | Courier>(`/couriers/${id}`),
+
+  /**
+   * GET /couriers/{id}/history — journal d'étapes (`Courier_Histories`).
+   *
+   * Route au singulier (vérifié : `/histories` répond 404). La réponse est
+   * enveloppée et ne porte que des clés étrangères — aucune jointure `user` /
+   * `service` / `status` : la timeline résout les libellés de son côté.
+   */
+  history: (id: string) => api.get<ApiEnvelope<CourierHistory[]>>(`/couriers/${id}/history`),
 };
 
 /**

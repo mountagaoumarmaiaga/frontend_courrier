@@ -21,8 +21,9 @@ export interface Role extends Timestamps {
 export interface Contact extends Timestamps {
   id: string;
   phone: string;
-  email?: string;
-  address?: string;
+  /** `null` sur les champs non renseignés (réponse réelle de l'API). */
+  email?: string | null;
+  address?: string | null;
 }
 
 export interface Institution extends Timestamps {
@@ -79,31 +80,57 @@ export interface Sender extends Timestamps {
   name: string;
   id_senderType: string;
   id_contact: string;
+  /**
+   * Relations incluses par le backend. Attention : Laravel les sérialise en
+   * **snake_case** (`sender_type`), alors que les colonnes, elles, sont en
+   * camelCase (`id_senderType`). Les noms suivent la réponse réelle, vérifiée
+   * sur l'API — pas la convention qu'on aurait pu supposer.
+   */
+  sender_type?: SenderType;
+  contact?: Contact;
 }
 
 export interface Courier extends Timestamps {
   id: string;
   referenceNumber: string;
-  physicalReference?: string;
+  physicalReference?: string | null;
   subject: string;
-  description?: string;
+  description?: string | null;
   submissionDate: string;
-  id_institution: string;
+  /** Absent de la réponse de `courier.index` : le backend ne l'expose pas. */
+  id_institution?: string;
   id_sender: string;
   id_status: string;
-  id_currentUser?: string;
-  id_currentService?: string;
+  id_currentUser?: string | null;
+  id_currentService?: string | null;
+  /**
+   * Relations incluses par `courier.index`, en **snake_case** (Laravel).
+   * Toutes facultatives : la liste doit s'afficher même si l'API se limite un
+   * jour aux clés étrangères.
+   */
+  sender?: Sender;
+  status?: Status;
+  current_user?: User;
+  current_service?: Service;
 }
 
 export interface CourierHistory extends Timestamps {
   id: string;
   stepNumber: number;
+  /** Intitulé déjà lisible côté API (« Clôture », « Transmission »…). */
   action: string;
-  comment?: string;
+  comment?: string | null;
   id_courier: string;
-  id_user?: string;
-  id_service?: string;
+  id_user?: string | null;
+  id_service?: string | null;
   id_status: string;
+}
+
+/** Query params de `courier.index` (GET /couriers). */
+export interface CourierListParams {
+  id_status?: string;
+  id_currentService?: string;
+  search?: string;
 }
 
 /* ─── Authentification ─────────────────────────────────────────────────── */
